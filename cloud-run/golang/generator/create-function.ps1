@@ -7,8 +7,13 @@ cd $args[0]
 go mod init myfunction
 Copy-Item ..\..\generator\defaults\* .\ -Recurse
 
+# add shared utilities and models
+Copy-Item ..\..\shared\utilities\* .\ -Recurse
+Copy-Item ..\..\shared\models\* .\ -Recurse
+
 # install default dependencies
 go get cloud.google.com/go/firestore
+go get github.com/golang-jwt/jwt/v5
 
 # create deploy script
 $template = Get-Content ..\..\generator\templates\deploy.sh
