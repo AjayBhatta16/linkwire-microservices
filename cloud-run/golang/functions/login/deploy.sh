@@ -1,4 +1,5 @@
-﻿gcloud functions deploy login \
+﻿#!/bin/bash
+gcloud functions deploy login \
   --gen2 \
   --region=$GCP_REGION \
   --runtime=go122 \
