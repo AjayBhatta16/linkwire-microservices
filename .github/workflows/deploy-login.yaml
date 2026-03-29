@@ -1,10 +1,10 @@
-name: Deploy {{FUNCTION_NAME}} Function
+﻿name: Deploy login Function
 
 on:
   push:
     paths:
-      - ".github/workflows/{{FUNCTION_NAME}}-pipeline.yaml"
-      - "cloud-run/golang/functions/{{FUNCTION_NAME}}/**"
+      - ".github/workflows/login-pipeline.yaml"
+      - "cloud-run/golang/functions/login/**"
       - "cloud-run/golang/shared/**"
     branches:
       - main
@@ -19,7 +19,7 @@ jobs:
 
     - name: Copy models and utilities to function directory
       run: |
-        cd cloud-run/golang/functions/{{FUNCTION_NAME}}
+        cd cloud-run/golang/functions/login
         cp ../../shared/models/*.go .
         cp ../../shared/utilities/*.go .
 
@@ -38,6 +38,6 @@ jobs:
 
     - name: Deploy Cloud Function
       run: |
-        cd cloud-run/golang/functions/{{FUNCTION_NAME}}
+        cd cloud-run/golang/functions/login
         chmod 700 deploy.sh
         ./deploy.sh
