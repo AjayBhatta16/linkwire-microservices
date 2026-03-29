@@ -1,6 +1,8 @@
-package Linkwire.Models
+package myfunction
 
 type Click struct {
+	FirestoreRecordBase
+
 	ClickID   string `json:"clickID" firestore:"clickID"`
 	IP        string `json:"ip" firestore:"ip"`
 	LinkID    string `json:"linkID" firestore:"linkID"`
@@ -15,5 +17,14 @@ type Click struct {
 	Proxy     bool   `json:"proxy" firestore:"proxy"`
 	Hosting   bool   `json:"hosting" firestore:"hosting"`
 	ASN       string `json:"asn" firestore:"asn"`
+
 	FirestoreID string
+
+	GetFirestoreID() string {
+		return c.FirestoreID
+	}
+
+	SetFirestoreID(id string) {
+		c.FirestoreID = id
+	}
 }

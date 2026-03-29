@@ -1,6 +1,8 @@
-package Linkwire.Models
+package myfunction
 
 type Link struct {
+	FirestoreRecordBase
+
 	TrackingID      string  `json:"trackingID" firestore:"trackingID"`
 	DisplayID       string  `json:"displayID" firestore:"displayID"`
 	RedirectURL     string  `json:"redirectURL" firestore:"redirectURL"`
@@ -12,4 +14,14 @@ type Link struct {
 	LoginPageBrand  string  `json:"loginPageBrand" firestore:"loginPageBrand"`
 	CreatedBy       string  `json:"createdBy" firestore:"createdBy"`
 	Clicks          []Click `json:"clicks" firestore:"clicks"`
+
+	FirestoreID string
+
+	GetFirestoreID() string {
+		return c.FirestoreID
+	}
+
+	SetFirestoreID(id string) {
+		c.FirestoreID = id
+	}
 }

@@ -1,0 +1,41 @@
+name: Deploy {{FUNCTION_NAME}} Function
+
+on:
+  push:
+    paths:
+      - ".github/workflows/{{FUNCTION_NAME}}-pipeline.yaml"
+      - "cloud-run/golang/functions/{{FUNCTION_NAME}}/**"
+      - "cloud-run/golang/shared/**"
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Copy models and utilities to function directory
+      run: |
+        cd cloud-run/golang/functions/{{FUNCTION_NAME}}
+        cp ../../shared/*.go .
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_DEPLOYMENT_KEY }}
+
+    - name: Setup GCloud CLI
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Set environment variables
+      run: |
+        echo "GCP_PROJECT_NAME=${{ secrets.GCP_PROJECT_NAME }}" >> $GITHUB_ENV
+
+    - name: Deploy Cloud Function
+      run: |
+        cd cloud-run/golang/functions/{{FUNCTION_NAME}}
+        chmod 700 deploy.sh
+        ./deploy.sh
