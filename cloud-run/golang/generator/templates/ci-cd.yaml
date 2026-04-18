@@ -17,11 +17,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.23'
+
     - name: Copy models and utilities to function directory
       run: |
         cd cloud-run/golang/functions/{{FUNCTION_NAME}}
         cp ../../shared/models/*.go .
         cp ../../shared/utilities/*.go .
+
+    - name: Validate syntax
+      run: |
+        cd cloud-run/golang/functions/{{FUNCTION_NAME}}
+        go vet ./...
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
