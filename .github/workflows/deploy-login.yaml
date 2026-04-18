@@ -3,7 +3,7 @@
 on:
   push:
     paths:
-      - ".github/workflows/login-pipeline.yaml"
+      - ".github/workflows/deploy-login.yaml"
       - "cloud-run/golang/functions/login/**"
       - "cloud-run/golang/shared/**"
     branches:
