@@ -21,22 +21,22 @@ func ProcessRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Username == nil {
+	if req.Username == "" {
 		http.Error(w, "Username is required", http.StatusBadRequest)
 		return
 	}
 
-	if req.Password == nil {
+	if req.Password == "" {
 		http.Error(w, "Password is required", http.StatusBadRequest)
 		return
 	}
 
 	var user User
 
-	usersByUsername := GetItemsByFieldValue[User]("users", "username", req.Username)
+	usersByUsername, _ := GetItemsByFieldValue[User]("users", "username", req.Username)
 
 	if len(usersByUsername) == 0 {
-		usersByEmail := GetItemsByFieldValue[User]("users", "email", req.Username)
+		usersByEmail, _ := GetItemsByFieldValue[User]("users", "email", req.Username)
 
 		if len(usersByEmail) == 0 {
 			http.Error(w, "Incorrect username or password", http.StatusUnauthorized)
@@ -48,17 +48,13 @@ func ProcessRequest(w http.ResponseWriter, r *http.Request) {
 		user = usersByUsername[0]
 	}
 
-	hashedPassword, _ := HashPassword(req.Password)
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
 
-	if hashedPassword != user.Password {
+	if err != nil {
 		http.Error(w, "Incorrect username or password", http.StatusUnauthorized)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
-}
-
-func HashPassword(password string) (string, error) {
-	return bcrypt.GenerateFromPassword([]byte(password), 10)
 }

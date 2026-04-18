@@ -19,12 +19,4 @@ type Click struct {
 	ASN       string `json:"asn" firestore:"asn"`
 
 	FirestoreID string
-
-	GetFirestoreID() string {
-		return c.FirestoreID
-	}
-
-	SetFirestoreID(id string) {
-		c.FirestoreID = id
-	}
 }

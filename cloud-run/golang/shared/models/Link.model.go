@@ -16,12 +16,4 @@ type Link struct {
 	Clicks          []Click `json:"clicks" firestore:"clicks"`
 
 	FirestoreID string
-
-	GetFirestoreID() string {
-		return c.FirestoreID
-	}
-
-	SetFirestoreID(id string) {
-		c.FirestoreID = id
-	}
 }

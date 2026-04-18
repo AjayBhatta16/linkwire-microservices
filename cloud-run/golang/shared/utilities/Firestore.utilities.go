@@ -11,7 +11,7 @@ import (
 func GetFirestoreClient(ctx context.Context) (*firestore.Client, error) {
 	projectID := os.Getenv("GCP_PROJECT_ID")
 
-	client, err := Firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, projectID)
 	
 	return client, err
 }
@@ -19,14 +19,14 @@ func GetFirestoreClient(ctx context.Context) (*firestore.Client, error) {
 func GetItemsByFieldValue[TData FirestoreRecordBase](
 	collectionName string, 
 	fieldName string, 
-	fieldValue string) ([]TData, error) 
-{
+	fieldValue string) ([]TData, error) {
+		
 	ctx := context.Background()
 
 	client, err := GetFirestoreClient(ctx)
 
 	if err != nil {
-		log.PrintLn("GetItemsByFieldValue - Error creating Firestore client:", err)
+		log.Println("GetItemsByFieldValue - Error creating Firestore client:", err)
 		return nil, err
 	}
 
@@ -40,7 +40,7 @@ func GetItemsByFieldValue[TData FirestoreRecordBase](
 	docs, err := iter.GetAll()
 
 	if err != nil {
-		log.PrintLn("GetItemsByFieldValue - Error fetching documents:", err)
+		log.Println("GetItemsByFieldValue - Error fetching documents:", err)
 		return nil, err
 	}
 
@@ -48,7 +48,7 @@ func GetItemsByFieldValue[TData FirestoreRecordBase](
 		var data TData
 		err := doc.DataTo(&data)
 		if err != nil {
-			log.PrintLn("GetItemsByFieldValue - Error converting document data:", err)
+			log.Println("GetItemsByFieldValue - Error converting document data:", err)
 			continue
 		}
 		data.SetFirestoreID(doc.Ref.ID)
@@ -60,24 +60,24 @@ func GetItemsByFieldValue[TData FirestoreRecordBase](
 
 func CreateItem[TData FirestoreRecordBase](
 	collectionName string, 
-	data TData) error 
-{
+	data TData) error {
+
 	ctx := context.Background()
 
 	client, err := GetFirestoreClient(ctx)
 
 	if err != nil {
-		log.PrintLn("CreateItem - Error creating Firestore client:", err)
+		log.Println("CreateItem - Error creating Firestore client:", err)
 		return err
 	}
 
 	defer client.Close()
 
-	_, _, err := client.Collection(collectionName).Add(ctx, data)
+	_, _, err2 := client.Collection(collectionName).Add(ctx, data)
 
-	if err != nil {
-		log.PrintLn("CreateItem - Error adding document:", err)
-		return err
+	if err2 != nil {
+		log.Println("CreateItem - Error adding document:", err2)
+		return err2
 	}
 
 	return nil
@@ -86,25 +86,25 @@ func CreateItem[TData FirestoreRecordBase](
 func UpdateItem[TData FirestoreRecordBase](
 	collectionName string, 
 	firestoreID string,
-	data TData) error
-{
+	data TData) error {
+
 	ctx := context.Background()
 
 	client, err := GetFirestoreClient(ctx)
 
 	if err != nil {
-		log.PrintLn("UpdateItem - Error creating Firestore client:", err)
+		log.Println("UpdateItem - Error creating Firestore client:", err)
 		return err
 	}
 
 	defer client.Close()
 
-	_, err := client.Collection(collectionName).Doc(firestoreID).Set(ctx, data)
+	_, err2 := client.Collection(collectionName).Doc(firestoreID).Set(ctx, data)
 
-	if err != nil {
-		log.PrintLn("UpdateItem - Error updating document:", err)
-		return err
+	if err2 != nil {
+		log.Println("UpdateItem - Error updating document:", err2)
+		return err2
 	}
 
-	return
+	return nil
 }
