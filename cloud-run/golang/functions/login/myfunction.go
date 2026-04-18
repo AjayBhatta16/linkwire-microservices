@@ -5,7 +5,12 @@ import (
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
+	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 )
+
+func init() {
+	funcframework.RegisterHTTPFunction("/", ProcessRequest)
+}
 
 func ProcessRequest(w http.ResponseWriter, r *http.Request) {
 	type Request struct {

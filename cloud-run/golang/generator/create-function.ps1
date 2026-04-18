@@ -14,8 +14,8 @@ Copy-Item ..\..\shared\models\* .\ -Recurse
 # install default dependencies
 go get cloud.google.com/go/firestore
 go get github.com/golang-jwt/jwt/v5
-go mod download cloud.google.com/go/functions
-go mod download github.com/GoogleCloudPlatform/functions-framework-go
+go get cloud.google.com/go/functions
+go get github.com/GoogleCloudPlatform/functions-framework-go
 
 # create deploy script
 $template = Get-Content ..\..\generator\templates\deploy.sh
