@@ -2,7 +2,7 @@
 gcloud functions deploy login \
   --gen2 \
   --region=$GCP_REGION \
-  --runtime=go122 \
+  --runtime=go123 \
   --source=. \
   --entry-point=ProcessRequest \
   --trigger-http \

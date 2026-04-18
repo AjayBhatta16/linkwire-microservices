@@ -1,6 +1,6 @@
-module myfunction
+module linkwire.cc/login
 
-go 1.26.1
+require github.com/GoogleCloudPlatform/functions-framework-go v1.5.2
 
 require (
 	cloud.google.com/go v0.123.0 // indirect
@@ -36,3 +36,5 @@ require (
 	google.golang.org/grpc v1.76.0 // indirect
 	google.golang.org/protobuf v1.36.10 // indirect
 )
+
+go 1.23
