@@ -2,6 +2,7 @@ package myfunction
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -39,6 +40,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		usersByEmail, _ := GetItemsByFieldValue[User]("users", "email", req.Username)
 
 		if len(usersByEmail) == 0 {
+			log.Printf("No user found with username or email: %s", req.Username)
 			http.Error(w, "Incorrect username or password", http.StatusUnauthorized)
 			return
 		}
@@ -51,6 +53,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
 
 	if err != nil {
+		log.Printf("Password mismatch for user: %s", req.Username)
 		http.Error(w, "Incorrect username or password", http.StatusUnauthorized)
 		return
 	}
