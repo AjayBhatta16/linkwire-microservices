@@ -4,7 +4,7 @@ mkdir $args[0]
 
 # setup new project
 cd $args[0]
-go mod init linkwire.cc/$args[0]
+go mod init "linkwire.cc/$($args[0])"
 Copy-Item ..\..\generator\defaults\* .\ -Recurse
 
 # install default dependencies
