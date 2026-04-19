@@ -3,15 +3,12 @@ package myfunction
 import (
 	"context"
 	"log"
-	"os"
 
 	"cloud.google.com/go/firestore"
 )
 
 func GetFirestoreClient(ctx context.Context) (*firestore.Client, error) {
-	projectID := os.Getenv("GCP_PROJECT_ID")
-
-	client, err := firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, firestore.DetectProjectID)
 	
 	return client, err
 }

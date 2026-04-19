@@ -34,14 +34,20 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	var user User
 
-	usersByUsername, _ := GetItemsByFieldValue[User]("users", "username", req.Username)
+	usersByUsername, err2 := GetItemsByFieldValue[User]("users", "username", req.Username)
+
+	if err2 != nil {
+		log.Println("Error fetching users by username:", err2)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
 
 	if len(usersByUsername) == 0 {
-		usersByEmail, _ := GetItemsByFieldValue[User]("users", "email", req.Username)
+		usersByEmail, err3 := GetItemsByFieldValue[User]("users", "email", req.Username)
 
-		if len(usersByEmail) == 0 {
-			log.Printf("No user found with username or email: %s", req.Username)
-			http.Error(w, "Incorrect username or password", http.StatusUnauthorized)
+		if err3 != nil {
+			log.Println("Error fetching users by email:", err3)
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
