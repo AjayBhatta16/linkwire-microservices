@@ -6,6 +6,8 @@ import (
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
+	"github.com/AjayBhatta16/linkwire-golang-shared/models"
+    "github.com/AjayBhatta16/linkwire-golang-shared/utilities"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -32,9 +34,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user User
+	var user models.User
 
-	usersByUsername, err2 := GetItemsByFieldValue[User, *User]("users", "username", req.Username)
+	usersByUsername, err2 := utilities.GetItemsByFieldValue[models.User, *models.User]("users", "username", req.Username)
 
 	if err2 != nil {
 		log.Println("Error fetching users by username:", err2)
@@ -43,7 +45,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(usersByUsername) == 0 {
-		usersByEmail, err3 := GetItemsByFieldValue[User, *User]("users", "email", req.Username)
+		usersByEmail, err3 := utilities.GetItemsByFieldValue[models.User, *models.User]("users", "email", req.Username)
 
 		if err3 != nil {
 			log.Println("Error fetching users by email:", err3)
