@@ -1,4 +1,4 @@
-module myfunction
+module linkwire.cc/signup
 
 go 1.26.1
 
