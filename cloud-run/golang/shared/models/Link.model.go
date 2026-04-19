@@ -15,5 +15,5 @@ type Link struct {
 	CreatedBy       string  `json:"createdBy" firestore:"createdBy"`
 	Clicks          []Click `json:"clicks" firestore:"clicks"`
 
-	FirestoreID string
+	FirestoreID string `json:"-"`
 }

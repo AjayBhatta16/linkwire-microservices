@@ -18,5 +18,5 @@ type Click struct {
 	Hosting   bool   `json:"hosting" firestore:"hosting"`
 	ASN       string `json:"asn" firestore:"asn"`
 
-	FirestoreID string
+	FirestoreID string `json:"-"`
 }

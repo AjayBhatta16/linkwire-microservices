@@ -7,7 +7,7 @@ type User struct {
 	PremiumUser bool   `json:"premiumUser" firestore:"premiumUser"`
 	Links []string `json:"links" firestore:"links"`
 
-	FirestoreID string
+	FirestoreID string `json:"-"`
 }
 
 func (u *User) SetFirestoreID(id string) {
