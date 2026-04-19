@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
-	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
