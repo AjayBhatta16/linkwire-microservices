@@ -11,11 +11,6 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	type Request struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
-
 	var req Request
 	err := json.NewDecoder(r.Body).Decode(&req)
 
@@ -66,6 +61,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	jwt, _ := utilities.GenerateJWT(user.Username)
+	cookieHeader := utilities.GetSetCookieHeaderValue(jwt)
+
+	w.Header().Set("Set-Cookie", cookieHeader)
 	w.Header().Set("Content-Type", "application/json")
 
 	json.NewEncoder(w).Encode(user)

@@ -1,7 +1,7 @@
 module linkwire.cc/login
 
 require (
-	github.com/AjayBhatta16/linkwire-golang-shared v0.1.1
+	github.com/AjayBhatta16/linkwire-golang-shared v0.1.5
 	golang.org/x/crypto v0.49.0
 )
 
