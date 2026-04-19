@@ -6,5 +6,5 @@ gcloud functions deploy login \
   --source=. \
   --entry-point=Handler \
   --trigger-http \
-  --set-env-vars PROJECT_ID=$GCP_PROJECT_NAME \
+  --set-env-vars PROJECT_ID=$GCP_PROJECT_NAME,JWT_SECRET_KEY=$JWT_SECRET_KEY \
   --allow-unauthenticated

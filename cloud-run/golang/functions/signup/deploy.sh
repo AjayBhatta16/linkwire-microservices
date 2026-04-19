@@ -1,5 +1,5 @@
-#!/bin/bash
-gcloud functions deploy {{FUNCTION_NAME}} \
+﻿#!/bin/bash
+gcloud functions deploy signup \
   --gen2 \
   --region=$GCP_REGION \
   --runtime=go126 \

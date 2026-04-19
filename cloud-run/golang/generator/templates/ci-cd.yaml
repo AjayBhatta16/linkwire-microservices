@@ -38,6 +38,7 @@ jobs:
       run: |
         echo "GCP_PROJECT_NAME=${{ secrets.GCP_PROJECT_NAME }}" >> $GITHUB_ENV
         echo "GCP_REGION=${{ secrets.GCP_REGION }}" >> $GITHUB_ENV
+        echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> $GITHUB_ENV
 
     - name: Deploy Cloud Function
       run: |
