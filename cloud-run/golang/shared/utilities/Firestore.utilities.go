@@ -34,6 +34,8 @@ func GetItemsByFieldValue[TData FirestoreRecordBase](
 	
 	var items []TData
 
+	log.Printf("Querying collection '%s' for documents where '%s' == '%s'", collectionName, fieldName, fieldValue)
+
 	iter := client.Collection(collectionName).Where(fieldName, "==", fieldValue).Documents(ctx)
 	defer iter.Stop()
 
