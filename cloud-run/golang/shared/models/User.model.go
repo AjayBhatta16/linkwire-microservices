@@ -1,8 +1,6 @@
 package myfunction
 
 type User struct {
-	FirestoreRecordBase
-
 	Username string `json:"username" firestore:"username"`
 	Email    string `json:"email" firestore:"email"`
 	Password string `json:"password" firestore:"password"`
@@ -10,4 +8,12 @@ type User struct {
 	Links []string `json:"links" firestore:"links"`
 
 	FirestoreID string
+}
+
+func (u *User) SetFirestoreID(id string) {
+    u.FirestoreID = id
+}
+
+func (u *User) GetFirestoreID() string {
+	return u.FirestoreID
 }

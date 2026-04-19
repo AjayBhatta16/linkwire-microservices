@@ -34,7 +34,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	var user User
 
-	usersByUsername, err2 := GetItemsByFieldValue[User]("users", "username", req.Username)
+	usersByUsername, err2 := GetItemsByFieldValue[User, *User]("users", "username", req.Username)
 
 	if err2 != nil {
 		log.Println("Error fetching users by username:", err2)
@@ -43,7 +43,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(usersByUsername) == 0 {
-		usersByEmail, err3 := GetItemsByFieldValue[User]("users", "email", req.Username)
+		usersByEmail, err3 := GetItemsByFieldValue[User, *User]("users", "email", req.Username)
 
 		if err3 != nil {
 			log.Println("Error fetching users by email:", err3)

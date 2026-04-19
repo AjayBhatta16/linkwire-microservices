@@ -13,7 +13,10 @@ func GetFirestoreClient(ctx context.Context) (*firestore.Client, error) {
 	return client, err
 }
 
-func GetItemsByFieldValue[TData FirestoreRecordBase](
+func GetItemsByFieldValue[TData any, TPointer interface {
+    *TData
+    FirestoreRecordBase
+}](
 	collectionName string, 
 	fieldName string, 
 	fieldValue string) ([]TData, error) {
@@ -44,14 +47,19 @@ func GetItemsByFieldValue[TData FirestoreRecordBase](
 	}
 
 	for _, doc := range docs {
-		var data TData
-		err := doc.DataTo(&data)
+		data := new(TData)
+		pointer := TPointer(data)
+
+		err := doc.DataTo(pointer)
+
 		if err != nil {
 			log.Println("GetItemsByFieldValue - Error converting document data:", err)
 			continue
 		}
-		data.SetFirestoreID(doc.Ref.ID)
-		items = append(items, data)
+
+		pointer.SetFirestoreID(doc.Ref.ID)
+		
+		items = append(items, *pointer)
 	}
 
 	return items, nil
