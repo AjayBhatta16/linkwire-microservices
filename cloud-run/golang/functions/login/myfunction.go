@@ -8,11 +8,7 @@ import (
 	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 )
 
-func init() {
-	funcframework.RegisterHTTPFunction("/", ProcessRequest)
-}
-
-func ProcessRequest(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	type Request struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
