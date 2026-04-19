@@ -17,6 +17,9 @@ go get github.com/golang-jwt/jwt/v5
 go get cloud.google.com/go/functions
 go get github.com/GoogleCloudPlatform/functions-framework-go
 
+# get latest version of shared utilities and models
+go get github.com/AjayBhatta16/linkwire-golang-shared@latest
+
 # create deploy script
 $template = Get-Content ..\..\generator\templates\deploy.sh
 $template = $template -replace "{{FUNCTION_NAME}}", $args[0]

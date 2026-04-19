@@ -5,7 +5,6 @@ on:
     paths:
       - ".github/workflows/deploy-login.yaml"
       - "cloud-run/golang/functions/login/**"
-      - "cloud-run/golang/shared/**"
     branches:
       - main
 
@@ -25,7 +24,7 @@ jobs:
     - name: Validate syntax
       run: |
         cd cloud-run/golang/functions/login
-        go vet ./...
+        go vet .
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
