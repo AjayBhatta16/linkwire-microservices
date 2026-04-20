@@ -13,7 +13,7 @@ import (
 func Handler(w http.ResponseWriter, r *http.Request) {
 	// validate request
 	log.Printf("Request path: %s", r.URL.Path)
-	username := utilities.GetVariableFromPath(r, "get-links-by-username")
+	username := GetUsernameFromPath(r)
 
 	if username == "" {
 		http.Error(w, "Username is required", http.StatusBadRequest)
@@ -49,4 +49,19 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// return links as JSON
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(links)
+}
+
+func GetUsernameFromPath(r *http.Request) string {
+	parts := strings.Split(r.URL.Path, "/")
+
+	username := ""
+
+	for i, part := range parts {
+		if part == "username" && i+1 < len(parts) {
+			username = parts[i+1]
+			break
+		}
+	}
+
+	return username
 }
