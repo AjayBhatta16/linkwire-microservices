@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/AjayBhatta16/linkwire-golang-shared/constants"
 	"github.com/AjayBhatta16/linkwire-golang-shared/models"
@@ -22,6 +23,14 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// validate JWT
 	token := utilities.GetTokenFromCookies(w, r)
+
+	notExpired, expErr := utilities.ValidateJWTNotExpired(token)
+
+	if expErr != nil || !notExpired {
+		log.Println("Handler - JWT is expired or invalid:", expErr)
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
 
 	tokenUsername, err := utilities.GetJWTUsername(token)
 
