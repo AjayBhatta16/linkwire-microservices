@@ -12,6 +12,7 @@ import (
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	// validate request
+	log.Printf("Request path: %s", r.URL.Path)
 	username := utilities.GetVariableFromPath(r, "get-links-by-username")
 
 	if username == "" {
