@@ -63,6 +63,17 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// populate click data
+	clicks, err3 := utilities.GetItemsByFieldValue[models.Click, *models.Click](constants.CLICK_CONTAINER_NAME, "linkID", link.DisplayID)
+
+	if err3 != nil {
+		log.Println("Handler - Error fetching clicks for link:", err3)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	link.Clicks = clicks
+
 	// return link as JSON
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(link)
