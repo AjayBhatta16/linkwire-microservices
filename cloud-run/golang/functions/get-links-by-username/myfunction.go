@@ -31,7 +31,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if tokenUsername != username {
-		log.Println("Handler - JWT username does not match path username")
+		log.Printf("Handler - JWT username %s does not match path username %s", tokenUsername, username)
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
