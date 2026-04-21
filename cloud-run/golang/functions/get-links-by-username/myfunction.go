@@ -13,6 +13,11 @@ import (
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	utilities.ApplyDefaultHeaders(w, "GET")
+
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
 	
 	// validate request
 	log.Printf("Request path: %s", r.URL.Path)
