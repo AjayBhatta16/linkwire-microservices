@@ -13,6 +13,8 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	utilities.ApplyDefaultHeaders(w, "GET")
+
 	// validate request
 	id := GetLinkIDFromPath(r)
 

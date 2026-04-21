@@ -2,7 +2,7 @@ module linkwire.cc/get-links-by-username
 
 go 1.26.1
 
-require github.com/AjayBhatta16/linkwire-golang-shared v0.1.10
+require github.com/AjayBhatta16/linkwire-golang-shared v0.1.11
 
 require (
 	cloud.google.com/go v0.123.0 // indirect

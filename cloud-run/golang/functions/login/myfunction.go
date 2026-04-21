@@ -11,6 +11,8 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	utilities.ApplyDefaultHeaders(w, "POST")
+
 	var req Request
 	err := json.NewDecoder(r.Body).Decode(&req)
 
