@@ -3,7 +3,7 @@ module linkwire.cc/signup
 go 1.26.1
 
 require (
-	github.com/AjayBhatta16/linkwire-golang-shared v0.1.12
+	github.com/AjayBhatta16/linkwire-golang-shared v0.1.13
 	golang.org/x/crypto v0.49.0
 )
 
