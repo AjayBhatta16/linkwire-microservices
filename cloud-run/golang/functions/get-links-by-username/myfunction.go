@@ -12,7 +12,7 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	utilities.ApplyDefaultHeaders(w, "GET")
+	utilities.ApplyDefaultHeaders(w, r, "GET")
 
 	if r.Method == http.MethodOptions {
 		w.WriteHeader(http.StatusNoContent)
