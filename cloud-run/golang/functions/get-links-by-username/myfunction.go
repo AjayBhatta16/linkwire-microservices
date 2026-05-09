@@ -62,6 +62,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// populate clicks field with empty array if nil
+	for i := range links {
+		if links[i].Clicks == nil {
+			links[i].Clicks = []models.Click{}
+		}
+	}
+
 	// return links as JSON
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(links)
