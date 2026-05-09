@@ -2,7 +2,7 @@ module linkwire.cc/create-link
 
 go 1.26.1
 
-require github.com/AjayBhatta16/linkwire-golang-shared v0.1.13
+require github.com/AjayBhatta16/linkwire-golang-shared v0.1.15
 
 require (
 	cloud.google.com/go v0.123.0 // indirect

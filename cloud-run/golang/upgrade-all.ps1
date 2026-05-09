@@ -9,6 +9,7 @@ Get-ChildItem -Path $functionsDir -Directory | ForEach-Object {
     cd $folderPath
     go get github.com/AjayBhatta16/linkwire-golang-shared@latest
     go mod tidy
+    go vet .
 }
 
 cd ..
