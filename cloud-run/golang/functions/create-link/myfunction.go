@@ -65,7 +65,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// trigger pub/sub for link processing
-	err5 := SubmitLinkForProcessing(link.DisplayID)
+	err5 := SubmitLinkForProcessing(link.TrackingID)
 
 	if err5 != nil {
 		// don't return a 500 response, since the link has already been created
