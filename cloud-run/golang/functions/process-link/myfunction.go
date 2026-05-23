@@ -15,7 +15,7 @@ import (
     "github.com/AjayBhatta16/linkwire-golang-shared/utilities"
 )
 
-func HandleMessage(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	subscriber, err := utilities.NewSubscriber(context.Background())
 
 	if err != nil {

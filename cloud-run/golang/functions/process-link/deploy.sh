@@ -5,6 +5,6 @@ gcloud functions deploy process-link \
   --runtime=go126 \
   --source=. \
   --entry-point=Handler \
-  --trigger-http \
-  --set-env-vars PROJECT_ID=$GCP_PROJECT_NAME,JWT_SECRET_KEY=$JWT_SECRET_KEY \
+  --trigger-topic=process-link-topic \
+  --set-env-vars PROJECT_ID=$GCP_PROJECT_NAME \
   --allow-unauthenticated
