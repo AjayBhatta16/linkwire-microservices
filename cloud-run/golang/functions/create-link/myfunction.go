@@ -1,6 +1,7 @@
 package myfunction
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"math/rand"
@@ -63,6 +64,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// trigger pub/sub for link processing
+	err5 := SubmitLinkForProcessing(link.DisplayID)
+
+	if err5 != nil {
+		// don't return a 500 response, since the link has already been created
+		// eventually, we will set up a dead letter queue and/or email alerts for failures here
+		log.Println("Handler - Error submitting link for processing:", err5)
+	}
+
 	// return success response
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(link)
@@ -90,4 +100,23 @@ func GenerateID() string {
     }
 
     return string(newID)
+}
+
+func SubmitLinkForProcessing(linkID string) error {
+	publisher, err := utilities.NewPublisher(context.Background())
+
+    if err != nil {
+        log.Fatalf("failed to create publisher: %v", err)
+		return err
+    }
+
+    defer publisher.Close()
+
+	var payload ProcessLinkRequest
+
+	payload.LinkID = linkID
+
+    err = utilities.Publish(publisher, "process-link-topic", payload)
+
+	return err
 }

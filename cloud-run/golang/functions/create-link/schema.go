@@ -5,4 +5,8 @@ type Request struct {
 	Note 	    string `json:"note"`
 }
 
+type ProcessLinkRequest struct {
+	LinkID string `json:"linkID"`
+}
+
 const CODE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
