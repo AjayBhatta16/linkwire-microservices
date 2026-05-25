@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/deploy-{{FUNCTION_NAME}}.yaml"
-      - "cloud-run/golang/functions/{{FUNCTION_NAME}}/**"
+      - "cloud-run/nodejs/functions/{{FUNCTION_NAME}}/**"
     branches:
       - main
 

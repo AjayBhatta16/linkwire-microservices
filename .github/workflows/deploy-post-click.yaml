@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/deploy-post-click.yaml"
-      - "cloud-run/golang/functions/post-click/**"
+      - "cloud-run/nodejs/functions/post-click/**"
     branches:
       - main
 
