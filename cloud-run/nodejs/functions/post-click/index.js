@@ -16,6 +16,8 @@ functions.http("handler", async (req, res) => {
     const deviceInfo = extractDeviceInfo(userAgent);
     const ipInfo = await extractIPInfo(ipAddress);
 
+    console.log('Extracted IP info:', JSON.stringify(ipInfo));
+
     const click = {
         clickID: `${linkID}-${Date.now()}`,
         linkID: linkID,
