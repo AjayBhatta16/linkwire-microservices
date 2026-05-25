@@ -28,11 +28,11 @@ functions.http("handler", async (req, res) => {
         client: `${deviceInfo.client.type} - ${deviceInfo.client.name} ${deviceInfo.client.version}`,
         device: `${deviceInfo.device.type} - ${deviceInfo.device.type} ${deviceInfo.device.model}`,
         location: `${ipInfo.city}, ${ipInfo.regionName}, ${ipInfo.country}`,
-        isp: ipInfo.isp,
-        asn: ipInfo.as,
-        mobile: ipInfo.mobile,
-        proxy: ipInfo.proxy,
-        hosting: ipInfo.hosting,
+        isp: ipInfo.isp ?? '',
+        asn: ipInfo.as ?? '',
+        mobile: ipInfo.mobile ?? false,
+        proxy: ipInfo.proxy ?? false,
+        hosting: ipInfo.hosting ?? false,
     };
 
     await saveClick(click);
