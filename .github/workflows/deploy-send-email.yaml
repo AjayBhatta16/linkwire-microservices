@@ -1,0 +1,48 @@
+﻿name: Deploy send-email Function
+
+on:
+  push:
+    paths:
+      - ".github/workflows/deploy-send-email.yaml"
+      - "cloud-run/golang/functions/send-email/**"
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.26'
+
+    - name: Validate syntax
+      run: |
+        cd cloud-run/golang/functions/send-email
+        go vet .
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_DEPLOYMENT_KEY }}
+
+    - name: Setup GCloud CLI
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Set environment variables
+      run: |
+        echo "GCP_PROJECT_NAME=${{ secrets.GCP_PROJECT_NAME }}" >> $GITHUB_ENV
+        echo "GCP_REGION=${{ secrets.GCP_REGION }}" >> $GITHUB_ENV
+        echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> $GITHUB_ENV
+        echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> $GITHUB_ENV
+
+    - name: Deploy Cloud Function
+      run: |
+        cd cloud-run/golang/functions/send-email
+        chmod 700 deploy.sh
+        ./deploy.sh
