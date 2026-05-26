@@ -27,3 +27,18 @@ functions.http("handler", async (req, res) => {
         clientVersion: detectedAgent.client.version,
     });
 });
+
+function parseRequest(body) {
+    if (!body.message?.data) {
+        return null;
+    }
+    
+    try {
+        const decoded = Buffer.from(body.message.data, "base64").toString("utf8");
+        return JSON.parse(decoded);
+    } 
+    catch (err) {
+        console.error(`Bad Request: could not decode/parse message data — ${err.message}`);
+        return null;
+    }
+}
