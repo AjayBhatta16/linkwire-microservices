@@ -52,7 +52,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// fetch password reset request from database and validate
 	passwordResetRequests, err2 := utilities.GetItemsByFieldValue[models.PasswordResetRequest, *models.PasswordResetRequest](
-		constants.PASSWORD_RESET_REQUEST_CONTAINER_NAME, "resetRequestId", req.ResetRequestID)
+		constants.PASSWORD_RESET_REQUEST_CONTAINER_NAME, "requestId", req.ResetRequestID)
 
 	if err2 != nil {
 		http.Error(w, "Failed to fetch password reset request", http.StatusInternalServerError)
