@@ -48,7 +48,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	resetRequest := resetRequests[0]
 
 	// check if request is still valid (not expired or completed)
-	if resetRequest.ExpirationTimestamp > time.Now().Unix() {
+	if resetRequest.ExpirationTimestamp < time.Now().Unix() {
 		log.Printf("Handler - Password reset request with ID %s is expired", requestId)
 		http.Error(w, "Expired", http.StatusBadRequest)
 		return
