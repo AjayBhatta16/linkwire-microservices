@@ -1,0 +1,17 @@
+{
+  "name": "get-device-info",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework --target=handler",
+    "dev": "functions-framework --target=handler --port=8080"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^5.0.2",
+    "node-device-detector": "^2.2.5"
+  }
+}
