@@ -75,7 +75,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	// return password reset request
+	w.Header().Set("Content-Type", "application/json")
+
+	json.NewEncoder(w).Encode(passwordResetRequest)
 }
 
 func CreatePasswordResetRequest(user models.User) models.PasswordResetRequest {
