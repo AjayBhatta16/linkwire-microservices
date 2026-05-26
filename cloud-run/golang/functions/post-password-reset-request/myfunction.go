@@ -100,7 +100,9 @@ func GenerateEmailRequest(user models.User, request models.PasswordResetRequest)
 	output.To = user.Email
 	output.Subject = "Reset Your LinkWire Password"
 
-	output.Body = "<p>Click the link below to reset your password."
+	output.Body = "<p>Click the link below to reset your password.</p>"
+	output.Body += "<p>This link will expire in 4 hours.</p>"
+	output.Body += "<br/>"
 	output.Body += "<a href='https://app.linkwire.cc/password-resets/" + request.RequestId + "'>Reset Password</a>"
 
 	return output
