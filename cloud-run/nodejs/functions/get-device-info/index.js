@@ -14,7 +14,7 @@ functions.http("handler", async (req, res) => {
         res.status(400).send("Bad Request: missing userAgent field");
     }
 
-    let detectedAgent = deviceDetector.detect(req.body.userAgent);
+    let detectedAgent = deviceDetector.detect(userAgent);
 
     res.status(200).json({
         type: detectedAgent.device.type,
@@ -29,6 +29,8 @@ functions.http("handler", async (req, res) => {
 });
 
 function parseRequest(body) {
+    console.log("parseRequest body:", body);
+
     if (!body.message?.data) {
         return null;
     }
