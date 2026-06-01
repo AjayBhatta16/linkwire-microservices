@@ -1,5 +1,7 @@
 const functions = require("@google-cloud/functions-framework");
-const deviceDetector = require("node-device-detector");
+const DeviceDetector = require("node-device-detector");
+
+const deviceDetector = new DeviceDetector();
 
 functions.http("handler", async (req, res) => {
     if (req.body === null) {
