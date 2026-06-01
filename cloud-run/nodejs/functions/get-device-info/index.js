@@ -2,13 +2,11 @@ const functions = require("@google-cloud/functions-framework");
 const deviceDetector = require("node-device-detector");
 
 functions.http("handler", async (req, res) => {
-    const data = parseRequest(req.body);
-
-    if (data === null) {
+    if (req.body === null) {
         res.status(400).send("Bad Request: missing or invalid request data");
     }
 
-    const { userAgent } = data;
+    const { userAgent } = req.body;
 
     if (!userAgent) {
         res.status(400).send("Bad Request: missing userAgent field");
@@ -27,20 +25,3 @@ functions.http("handler", async (req, res) => {
         clientVersion: detectedAgent.client.version,
     });
 });
-
-function parseRequest(body) {
-    console.log("parseRequest body:", body);
-
-    if (!body.message?.data) {
-        return null;
-    }
-    
-    try {
-        const decoded = Buffer.from(body.message.data, "base64").toString("utf8");
-        return JSON.parse(decoded);
-    } 
-    catch (err) {
-        console.error(`Bad Request: could not decode/parse message data — ${err.message}`);
-        return null;
-    }
-}
