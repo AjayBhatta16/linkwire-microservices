@@ -85,6 +85,7 @@ func RequestToLink(req Request, createdBy string) models.Link {
 	output.Note = req.Note
 
 	output.CreatedBy = createdBy
+	output.ClickCount = 0
 
 	output.DisplayID = GenerateID()
 	output.TrackingID = GenerateID()

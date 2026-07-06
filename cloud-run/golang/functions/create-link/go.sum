@@ -20,6 +20,8 @@ github.com/AjayBhatta16/linkwire-golang-shared v0.1.15 h1:5vXMzZBIwfei9w6pjwzZ7J
 github.com/AjayBhatta16/linkwire-golang-shared v0.1.15/go.mod h1:vL/U89ibvAywBZv1wYFI93NIhxhtx/SXQsz0MQS2h0E=
 github.com/AjayBhatta16/linkwire-golang-shared v0.1.16 h1:GD5DrKny3qVWrjoGhiWXGArZ/8rESGgbqn6wJhPpoQ4=
 github.com/AjayBhatta16/linkwire-golang-shared v0.1.16/go.mod h1:FgKaoMp6Mh6LPL7FY8in/ZuQd41ZZ9y3+sBct0KYOic=
+github.com/AjayBhatta16/linkwire-golang-shared v0.1.19 h1:ohwCk1KGrZ17v4Z3toDvsis/HziNJQSSxUB+V1eqP/w=
+github.com/AjayBhatta16/linkwire-golang-shared v0.1.19/go.mod h1:dlRNuQ8zNX4eNZ4DSB/IiCnGcUW3r7trbCiKifhwxdU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
