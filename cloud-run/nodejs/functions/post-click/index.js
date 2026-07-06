@@ -94,3 +94,23 @@ async function saveClick(click) {
     const docRef = client.collection("clicks").doc(click.clickID);
     await docRef.set(click);
 }
+
+async function incrementClickCount(linkID) {
+    const client = new Firestore();
+
+    const querySnapshot = await client
+        .collection("links")
+        .where("displayID", "==", linkID)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.empty) {
+        console.error(`Link with displayID ${linkID} not found`);
+        return null;
+    }
+
+    const doc = querySnapshot.docs[0];
+    await doc.ref.update({
+        clickCount: (doc.data().clickCount || 0) + 1
+    });
+}
