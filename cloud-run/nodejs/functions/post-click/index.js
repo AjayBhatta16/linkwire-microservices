@@ -37,6 +37,8 @@ functions.http("handler", async (req, res) => {
 
     await saveClick(click);
 
+    await incrementClickCount(linkID);
+
     res.status(200).send("Click processed successfully");
 });
 
