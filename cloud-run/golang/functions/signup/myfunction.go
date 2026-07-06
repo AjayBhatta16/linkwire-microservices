@@ -95,6 +95,7 @@ func RequestToUser(req Request) models.User {
 	output.Password = HashPassword(req.Password)
 	output.PremiumUser = false
 	output.Links = []string{}
+	output.AgreedToLatestTerms = true
 
 	return output
 }
