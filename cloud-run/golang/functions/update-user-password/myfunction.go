@@ -40,8 +40,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.ResetRequestID == "" {
-		http.Error(w, "Reset request ID is required", http.StatusBadRequest)
+	if req.ResetRequestID == "" && req.OldPassword == "" {
+		http.Error(w, "Either a reset request ID or the current password must be provided", http.StatusBadRequest)
 		return
 	}
 
@@ -50,30 +50,34 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// fetch password reset request from database and validate
-	passwordResetRequests, err2 := utilities.GetItemsByFieldValue[models.PasswordResetRequest, *models.PasswordResetRequest](
-		constants.PASSWORD_RESET_REQUEST_CONTAINER_NAME, "requestId", req.ResetRequestID)
+	passwordResetRequest := &models.PasswordResetRequest{}
 
-	if err2 != nil {
-		http.Error(w, "Failed to fetch password reset request", http.StatusInternalServerError)
-		return
-	}
+	if req.ResetRequestID != "" {
+		// fetch password reset request from database and validate
+		passwordResetRequests, err2 := utilities.GetItemsByFieldValue[models.PasswordResetRequest, *models.PasswordResetRequest](
+			constants.PASSWORD_RESET_REQUEST_CONTAINER_NAME, "requestId", req.ResetRequestID)
 
-	if len(passwordResetRequests) == 0 {
-		http.Error(w, "Invalid reset request ID", http.StatusBadRequest)
-		return
-	}
+		if err2 != nil {
+			http.Error(w, "Failed to fetch password reset request", http.StatusInternalServerError)
+			return
+		}
 
-	passwordResetRequest := passwordResetRequests[0]
+		if len(passwordResetRequests) == 0 {
+			http.Error(w, "Invalid reset request ID", http.StatusBadRequest)
+			return
+		}
 
-	if passwordResetRequest.RequestedForUsername != username {
-		http.Error(w, "Reset request does not match username", http.StatusBadRequest)
-		return
-	}
+		passwordResetRequest = passwordResetRequests[0]
 
-	if passwordResetRequest.ExpirationTimestamp < time.Now().Unix() {
-		http.Error(w, "Reset request has expired", http.StatusBadRequest)
-		return
+		if passwordResetRequest.RequestedForUsername != username {
+			http.Error(w, "Reset request does not match username", http.StatusBadRequest)
+			return
+		}
+
+		if passwordResetRequest.ExpirationTimestamp < time.Now().Unix() {
+			http.Error(w, "Reset request has expired", http.StatusBadRequest)
+			return
+		}
 	}
 
 	// update user password
@@ -92,6 +96,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	user := users[0]
 
+	if req.OldPassword != "" {
+		// validate old password
+		err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.OldPassword))
+
+		if err != nil {
+			http.Error(w, "Old password is incorrect", http.StatusUnauthorized)
+			return
+		}
+	}
+
 	user.Password = HashPassword(req.NewPassword)
 
 	err4 := utilities.UpdateItem[models.User](
@@ -102,17 +116,19 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// update password reset request to mark it as used
-	passwordResetRequest.ResetCompleted = true
+	if req.ResetRequestID != "" {
+		// update password reset request to mark it as used
+		passwordResetRequest.ResetCompleted = true
 
-	err5 := utilities.UpdateItem[models.PasswordResetRequest](
-		constants.PASSWORD_RESET_REQUEST_CONTAINER_NAME, 
-		passwordResetRequest.FirestoreID, 
-		passwordResetRequest)
+		err5 := utilities.UpdateItem[models.PasswordResetRequest](
+			constants.PASSWORD_RESET_REQUEST_CONTAINER_NAME, 
+			passwordResetRequest.FirestoreID, 
+			passwordResetRequest)
 
-	if err5 != nil {
-		http.Error(w, "Failed to update password reset request", http.StatusInternalServerError)
-		return
+		if err5 != nil {
+			http.Error(w, "Failed to update password reset request", http.StatusInternalServerError)
+			return
+		}
 	}
 
 	// return user with new JWT
