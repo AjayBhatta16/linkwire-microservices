@@ -50,7 +50,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	passwordResetRequest := &models.PasswordResetRequest{}
+	passwordResetRequest := models.PasswordResetRequest{}
 
 	if req.ResetRequestID != "" {
 		// fetch password reset request from database and validate
